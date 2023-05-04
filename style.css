@@ -44,3 +44,13 @@ body {
     display: grid;
     grid-template: repeat(30, 1fr) / repeat(30, 1fr);
 }
+
+.play_board .food {
+    background-color: rgb(248, 21, 21);
+
+}
+
+
+.play_board .head {
+    background-color: rgb(37, 129, 129);
+}
