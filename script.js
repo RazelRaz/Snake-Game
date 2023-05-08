@@ -10,6 +10,19 @@ let snakeY = 10;
 let velocityX = 0;
 let velocityY = 0;
 
+let snakeBody = [];
+
+let gameOver = false;
+let setIntervalId;
+
+
+const handleGameOver = () => {
+    //clearing the timer and reloading the page on game over
+    clearInterval(setIntervalId);
+    alert("Game Over! Press Ok to reply");
+    location.reload();
+} 
+
 
 //3. change direction on pressing key
 const changeDirection = (e) => {
@@ -39,13 +52,42 @@ const changeFoodPosition = () => {
 
 //1. snake head and food
 const initGame = () => {
+
+    //if game over, return  the handle game over function
+    if(gameOver) return handleGameOver();
+
     let htmlMarkUp = `<div class='food' style='grid-area: ${foodY} / ${foodX}'></div>`;
+
+    //change food position after snakes eats it && // checkig if the snake hit the food
+    if(snakeX === foodX && snakeY === foodY){
+        changeFoodPosition();
+        // snake body sagment after eats it
+        snakeBody.push([foodX, foodY]); //pushing food position to snake body array
+        // console.log(snakeBody);
+        
+    }
+
+    for (let i = snakeBody.length - 1; i > 0; i--) {
+        //shifting forward the values of the elements in the snake body by one
+        snakeBody[i] = snakeBody[i - 1];
+    }
+
+    snakeBody[0] = [snakeX, snakeY] //setting first element of snake body to current snake position
 
     //updating the snake's head position based on the current velocity
     snakeX = snakeX + velocityX;
     snakeY = snakeY + velocityY;
 
-    htmlMarkUp += `<div class='head' style='grid-area: ${snakeY} / ${snakeX}'></div>`;
+    //checking the snakes head position based on the wall, if so setting game over true
+    //show the game over alert when the snake collides with the wall
+    if(snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30 ){
+        gameOver = true;
+    }
+
+    for (let i = 0; i < snakeBody.length; i++) {
+        //adding a div for each part of the snake's body 
+        htmlMarkUp += `<div class='head' style='grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}'></div>`;
+    }
     play_board.innerHTML = htmlMarkUp;
 }
 
@@ -53,6 +95,6 @@ changeFoodPosition();
 // initGame();
 
 //snake head will move 125 miliseconds
-setInterval(initGame, 125)
+setIntervalId = setInterval(initGame, 125)
 //adding addEventListener for key work
 document.addEventListener('keydown', changeDirection);
