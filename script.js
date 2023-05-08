@@ -27,16 +27,16 @@ const handleGameOver = () => {
 //3. change direction on pressing key
 const changeDirection = (e) => {
     //changing velocity value based on press
-    if(e.key === 'ArrowUp'){
+    if(e.key === 'ArrowUp' && velocityY != 1){
         velocityX = 0;
         velocityY = -1;
-    } else if (e.key === 'ArrowDown'){
+    } else if (e.key === 'ArrowDown' && velocityY != -1){
         velocityX = 0;
         velocityY = 1;
-    } else if (e.key === 'ArrowLeft'){
+    } else if (e.key === 'ArrowLeft' &&  velocityX != 1){
         velocityX = -1;
         velocityY = 0;
-    } else if (e.key === 'ArrowRight'){
+    } else if (e.key === 'ArrowRight' &&  velocityX != -1){
         velocityX = 1;
         velocityY = 0;
     }
@@ -63,8 +63,7 @@ const initGame = () => {
         changeFoodPosition();
         // snake body sagment after eats it
         snakeBody.push([foodX, foodY]); //pushing food position to snake body array
-        // console.log(snakeBody);
-        
+        // console.log(snakeBody);   
     }
 
     for (let i = snakeBody.length - 1; i > 0; i--) {
@@ -87,6 +86,10 @@ const initGame = () => {
     for (let i = 0; i < snakeBody.length; i++) {
         //adding a div for each part of the snake's body 
         htmlMarkUp += `<div class='head' style='grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}'></div>`;
+        //checking if the snake head hit the body, if so set gameOver true
+        if(i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]){
+            gameOver = true;
+        }
     }
     play_board.innerHTML = htmlMarkUp;
 }
