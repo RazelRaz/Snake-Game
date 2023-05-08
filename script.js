@@ -1,5 +1,6 @@
 const play_board = document.querySelector('.play_board');
 const scoreElement = document.querySelector('.score');
+const high_score_Element = document.querySelector('.high_score');
 
 //food
 let foodX;
@@ -18,7 +19,9 @@ let setIntervalId;
 
 let score = 0;
 
-// let highScore = localStorage.getItem();
+//getting high score from localStorage
+let highScore = localStorage.getItem("high_score") || 0;
+high_score_Element.innerText = `High Score: ${highScore}`;
 
 
 const handleGameOver = () => {
@@ -26,7 +29,7 @@ const handleGameOver = () => {
     clearInterval(setIntervalId);
     alert("Game Over! Press Ok to reply");
     location.reload();
-} 
+}
 
 
 //3. change direction on pressing key
@@ -71,7 +74,10 @@ const initGame = () => {
         // console.log(snakeBody);
         score++; //increment score by 1
 
+        highScore = score >= highScore ? score : highScore;
+        localStorage.setItem('high_score', highScore );
         scoreElement.innerText = `Score: ${score}`;
+        high_score_Element.innerText = `High Score: ${highScore}`;
     }
 
     for (let i = snakeBody.length - 1; i > 0; i--) {
