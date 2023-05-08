@@ -1,4 +1,5 @@
 const play_board = document.querySelector('.play_board');
+const scoreElement = document.querySelector('.score');
 
 //food
 let foodX;
@@ -14,6 +15,10 @@ let snakeBody = [];
 
 let gameOver = false;
 let setIntervalId;
+
+let score = 0;
+
+// let highScore = localStorage.getItem();
 
 
 const handleGameOver = () => {
@@ -58,12 +63,15 @@ const initGame = () => {
 
     let htmlMarkUp = `<div class='food' style='grid-area: ${foodY} / ${foodX}'></div>`;
 
-    //change food position after snakes eats it && // checkig if the snake hit the food
+    // checkig if the snake hit the food
     if(snakeX === foodX && snakeY === foodY){
         changeFoodPosition();
         // snake body sagment after eats it
         snakeBody.push([foodX, foodY]); //pushing food position to snake body array
-        // console.log(snakeBody);   
+        // console.log(snakeBody);
+        score++; //increment score by 1
+
+        scoreElement.innerText = `Score: ${score}`;
     }
 
     for (let i = snakeBody.length - 1; i > 0; i--) {
