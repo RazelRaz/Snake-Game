@@ -54,3 +54,38 @@ body {
 .play_board .head {
     background-color: rgb(37, 129, 129);
 }
+
+.controls {
+    display: none;
+    justify-content: space-between;
+}
+
+.controls i {
+    padding: 25px 0;
+    color: aliceblue;
+    width: calc(100% / 4);
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.3rem;
+    border-right: 1px solid #000;
+}
+
+/* Media query */
+@media screen and (max-width: 800px) {
+    .wrapper{
+        /* background-color: red; */
+        width: 90vmin;
+        height: 115vmin;
+    }
+    .game_details {
+        font-size: 1rem;
+        padding: 15px 27px;
+    }
+    .controls {
+        display: flex;
+    }
+    .controls i{
+        padding: 15px 0;
+        font-size: 1rem;
+    }
+}

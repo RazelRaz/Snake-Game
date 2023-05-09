@@ -1,6 +1,7 @@
 const play_board = document.querySelector('.play_board');
 const scoreElement = document.querySelector('.score');
 const high_score_Element = document.querySelector('.high_score');
+const controls = document.querySelectorAll('.controls i');
 
 //food
 let foodX;
@@ -57,6 +58,15 @@ const changeFoodPosition = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
     foodY = Math.floor(Math.random() * 30) + 1;
 }
+
+
+//Controls for small devices
+controls.forEach((key) => {
+    //Calling changeDirection on each key click and passing key dataset value as an object
+    key.addEventListener('click', () => changeDirection({key: key.dataset.key }));
+    // console.log({key: key.dataset.key });
+})
+
 
 //1. snake head and food
 const initGame = () => {
