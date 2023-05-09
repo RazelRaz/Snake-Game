@@ -2,6 +2,7 @@ const play_board = document.querySelector('.play_board');
 const scoreElement = document.querySelector('.score');
 const high_score_Element = document.querySelector('.high_score');
 const controls = document.querySelectorAll('.controls i');
+const popup = document.getElementById('popup');
 
 //food
 let foodX;
@@ -39,8 +40,10 @@ const togglePause = () => {
     paused = !paused;
     if (paused) {
       clearInterval(setIntervalId);
+      popup.style.display = 'block';
     } else {
       setIntervalId = setInterval(initGame, 125);
+      popup.style.display = 'none';
     }
   }
 
