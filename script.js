@@ -20,6 +20,9 @@ let setIntervalId;
 
 let score = 0;
 
+// Pause game flag
+let paused = false;
+
 //getting high score from localStorage
 let highScore = localStorage.getItem("high_score") || 0;
 high_score_Element.innerText = `High Score: ${highScore}`;
@@ -28,29 +31,40 @@ high_score_Element.innerText = `High Score: ${highScore}`;
 const handleGameOver = () => {
     //clearing the timer and reloading the page on game over
     clearInterval(setIntervalId);
-    alert("Game Over! Press Ok to reply");
+    alert("Game Over! Press Ok to re-start game.");
     location.reload();
 }
+
+const togglePause = () => {
+    paused = !paused;
+    if (paused) {
+      clearInterval(setIntervalId);
+    } else {
+      setIntervalId = setInterval(initGame, 125);
+    }
+  }
 
 
 //3. change direction on pressing key
 const changeDirection = (e) => {
-    //changing velocity value based on press
-    if(e.key === 'ArrowUp' && velocityY != 1){
-        velocityX = 0;
-        velocityY = -1;
-    } else if (e.key === 'ArrowDown' && velocityY != -1){
-        velocityX = 0;
-        velocityY = 1;
-    } else if (e.key === 'ArrowLeft' &&  velocityX != 1){
-        velocityX = -1;
-        velocityY = 0;
-    } else if (e.key === 'ArrowRight' &&  velocityX != -1){
-        velocityX = 1;
-        velocityY = 0;
+    if (e.key === 'ArrowUp' && velocityY !== 1) {
+      velocityX = 0;
+      velocityY = -1;
+    } else if (e.key === 'ArrowDown' && velocityY !== -1) {
+      velocityX = 0;
+      velocityY = 1;
+    } else if (e.key === 'ArrowLeft' && velocityX !== 1) {
+      velocityX = -1;
+      velocityY = 0;
+    } else if (e.key === 'ArrowRight' && velocityX !== -1) {
+      velocityX = 1;
+      velocityY = 0;
+    } else if (e.key === ' ') {
+      if (!gameOver) {
+        togglePause();
+      }
     }
-    // initGame();
-}
+  }
 
 //2. change snake food position randomly
 const changeFoodPosition = () => {
